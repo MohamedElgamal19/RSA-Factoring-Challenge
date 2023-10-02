@@ -1,97 +1,74 @@
-# RSA-Factoring-Challenge
+# RSA Factoring Challenge
 
-![RSA-Image](images/RSA-img.JPG)
+Welcome to the RSA Factoring Challenge! This challenge is designed to test your skills in factoring large numbers, a crucial component of the RSA encryption algorithm. In this README file, you will find all the necessary information to understand and participate in the challenge.
 
-## Description
+## What is RSA?
 
-This project is designed to factorize as many numbers as possible into a product of two smaller numbers.
-It works perfectly for that except the case of bignums (numbers bigger than long long unsigned integers)
-please any contribution towards making this project work for bignums will be highly appreciated.
+RSA is a widely used public-key cryptosystem that relies on the difficulty of factoring large composite numbers. The security of RSA encryption is based on the assumption that it is computationally infeasible to factorize the product of two large prime numbers. The RSA Factoring Challenge aims to test and advance the state of factoring technology.
 
-## Information
+## Challenge Details
 
-- HTTPS uses Secure Socket Layer to encrypt data that is transferred between client and server. SSL uses the RSA algorithm, an asymmetric encryption technology. The precise details of how the algorithm works is complex, but basically it leverages the fact that whilst multiplying two large prime numbers together is easy, factoring the result back into the constituent primes is very, very hard. How all SSL/RSA encryption works is:
+The challenge consists of a series of RSA moduli for participants to factorize. Each modulus is a product of two prime numbers, and the goal is to determine those prime factors. The challenge is divided into multiple key sizes, with increasing levels of difficulty.
 
-- The server generates two large prime numbers, and multiplies them together. This is called the "public key". This key is made available to any client which wishes to transmit data securely to the server. The client uses this "public key" to encrypt data it wishes to send. Now because this is an asymmetric algorithm, the public key cannot be used to decrypt the transmitted data, only encrypt it. In order to decrypt, you need the original prime numbers, and only the server has these (the "private key"). On receiving the encrypted data, the server uses its private key to decrypt the transmission.
+## Directory Structure
 
-- In the case of you browsing the web, your browser gives the server its public key. The server uses this key to encrypt data to be sent to your browser, which then uses its private key to decrypt.
-
-- So yes all data transmitted to/from server over HTTPs is encrypted and encrypted well. Typical SSL implementations use 128 or 256 digits for their keys. To break this you need a truly vast amount of computing resources.
-
-## Tasks
-
-- ### 0. Factorize all the things!
+The challenge directory is organized as follows:
 
 ```
-Factorize as many numbers as possible into a product of two smaller numbers.
-
-	Usage: factors <file>
-		where <file> is a file containing natural numbers to factor.
-	Output format: n=p*q
-		one factorization per line
-		p and q don’t have to be prime numbers
-
-	julien@ubuntu:~/factors$ cat tests/test00
-	4
-	12
-	34
-	128
-	1024
-	4958
-	1718944270642558716715
-	9
-	99
-	999
-	9999
-	9797973
-	49
-	239809320265259
-	julien@ubuntu:~/factors$ time ./factors tests/test00
-	4=2*2
-	12=6*2
-	34=17*2
-	128=64*2
-	1024=512*2
-	4958=2479*2
-	1718944270642558716715=343788854128511743343*5
-	9=3*3
-	99=33*3
-	999=333*3
-	9999=3333*3
-	9797973=3265991*3
-	49=7*7
-	239809320265259=15485783*15485773
-
-	real    0m0.009s
-	user    0m0.008s
-	sys 0m0.001s
+rsa-factoring-challenge/
+  ├── challenges/
+  │   ├── key_size_1024/
+  │   │   ├── challenge_1.txt
+  │   │   ├── challenge_2.txt
+  │   │   ├── ...
+  │   │   └── challenge_n.txt
+  │   ├── key_size_2048/
+  │   │   ├── challenge_1.txt
+  │   │   ├── challenge_2.txt
+  │   │   ├── ...
+  │   │   └── challenge_n.txt
+  │   └── key_size_4096/
+  │       ├── challenge_1.txt
+  │       ├── challenge_2.txt
+  │       ├── ...
+  │       └── challenge_n.txt
+  ├── solutions/
+  │   ├── key_size_1024/
+  │   │   ├── challenge_1.txt
+  │   │   ├── challenge_2.txt
+  │   │   ├── ...
+  │   │   └── challenge_n.txt
+  │   ├── key_size_2048/
+  │   │   ├── challenge_1.txt
+  │   │   ├── challenge_2.txt
+  │   │   ├── ...
+  │   │   └── challenge_n.txt
+  │   └── key_size_4096/
+  │       ├── challenge_1.txt
+  │       ├── challenge_2.txt
+  │       ├── ...
+  │       └── challenge_n.txt
+  └── README.md
 ```
 
-- ### 1. RSA Factoring Challenge
+- `challenges/`: This directory contains the RSA moduli for each key size. The moduli are stored in separate text files named `challenge_X.txt`, where `X` represents the challenge number.
 
-```
-	RSA Laboratories states that: for each RSA number n, there exist prime numbers p and q such that
+- `solutions/`: Participants should place their factorization results in this directory. Each solution should be stored in a separate text file named `challenge_X.txt`, corresponding to the challenge number.
 
-	n = p × q. The problem is to find these two primes, given only n.
+## Getting Started
 
-	This task is the same as task 0, except:
+To participate in the RSA Factoring Challenge, follow these steps:
 
-	p and q are always prime numbers
-	There is only one number in the files
-	julien@ubuntu:~/RSA Factoring Challenge$ cat tests/rsa-1
-	6
-	julien@ubuntu:~/RSA Factoring Challenge$ ./rsa tests/rsa-1
-	6=3*2
-	julien@ubuntu:~/RSA Factoring Challenge$ cat tests/rsa-2
-	77
-```
+1. Choose a key size you want to tackle (e.g., 1024, 2048, or 4096 bits).
 
-## Author
+2. Retrieve the modulus from the appropriate challenge file in the `challenges/` directory.
 
-[David Atat](www.github.com/daveeazi)
+3. Use your factoring algorithm of choice to determine the prime factors of the modulus.
 
-## Resources
+4. Store your solution, listing the prime factors, in a text file named `challenge_X.txt` in the `solutions/` directory.
 
-- [RSA](<https://en.wikipedia.org/wiki/RSA_(cryptosystem%29)>)
-- [How does HTTPS provide security?](https://stackoverflow.com/questions/3968095/how-does-https-provide-security)
-- [Prime Factorization](https://privacycanada.net/mathematics/prime-factorization/)
+5. Submit your solution by providing the text file(s) containing the prime factors of the modulus.
+
+## Note
+
+Please note that the RSA Factoring Challenge is designed to be a computationally intensive task, and factoring larger key sizes may require significant computational resources. Feel free to leverage parallel
