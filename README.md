@@ -1,20 +1,61 @@
-# _RSA Factoring Challenge_
-_We have sniffed an unsecured network and found numbers that are used to encrypt very important documents. It seems that those numbers are not always generated using large enough prime numbers. Your mission should you choose to accept it, is to factorize these numbers as fast as possible before the target fixes this bug on their server - so that we can decode the encrypted documents._
-![rsa_final](https://github.com/elyse502/RSA-Factoring-Challenge/assets/125453474/21ee83c2-34fe-4ed9-a880-1da67f99012b)
+Readme of RSA Factoring Challenge
 
-## RESOURCES 📚
-* [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem%29))
-* [How does HTTPS provide security?](https://stackoverflow.com/questions/3968095/how-does-https-provide-security)
-* [Prime Factorization](https://privacycanada.net/mathematics/prime-factorization/)
-* [Why RSA?](https://jaredatandi.hashnode.dev/rsa-factoring)
-
-## USAGE 🪴
 ```
-./<script> <Test Case>
-```
-## KNOWN ISSUE 🩹
-* At this time, there are no known bugs.
-## AUTHOR📝
-*__NIYIBIZI Elysée__ | [Linkedin](https://www.linkedin.com/in/niyibizi-elys%C3%A9e/).*
+# Prime Factors Finder
 
-![239912022-2d08e450-0f63-4979-89cc-1c377d48c32a](https://github.com/elyse502/RSA-Factoring-Challenge/assets/125453474/fb0fa029-506d-4534-968f-707eaa4fdd83)
+This is a Python script that reads a file containing natural numbers and factors them into a product of two prime numbers (`p` and `q`).
+
+## Usage
+
+### Requirements
+
+- Python 3.x
+
+### Running the Script
+
+1. Save the script as `prime_factors.py`.
+2. Make the script executable: `chmod +x prime_factors.py`.
+3. Create a text file (`input.txt`) containing the natural numbers you want to factor, with one number per line.
+4. Run the script with the following command:
+
+   ```bash
+   ./prime_factors.py input.txt
+   ```
+
+   Replace `input.txt` with the name of your input file.
+
+### Output Format
+
+The script will print the factorization in the following format for each number:
+
+```
+n = p * q
+```
+
+- `n` is the input number.
+- `p` and `q` are prime numbers that multiply to give `n`.
+
+If no two prime factors are found for a number, the script will report that no two prime factors were found.
+
+## Example
+
+Input (`input.txt`):
+
+```
+15
+21
+35
+```
+
+Output:
+
+```
+15 = 3 * 5
+21 = 3 * 7
+35 = 5 * 7
+```
+
+## Note
+
+- The script checks for primality of factors to ensure that both `p` and `q` are prime numbers.
+- If a number is prime and cannot be factored into two smaller prime numbers, it will report that no two prime factors were found.

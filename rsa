@@ -1,28 +1,78 @@
 #!/usr/bin/python3
-""" Factorizes numbers in a File into a product of two prime numbers. """
+
+"""
+
+Factorizing numbers into a file with a product of 2 prime numbers
+
+"""
 import sys
+import random
 
 
-def factorize():
-    """ A function to search File and factorize the given set of numbers into two prime numbers (format n = p * q). """
+def iprime(n, k=5):
+    if n <= 1:
+        return False
+    if n <= 2:
+        return True
+
+    # Miller-Rabin primality test
+    def mil_rab_test(d, n):
+        a = random.randint(2, n - 2)
+        x = pow(a, d, n)
+
+        if x == 1 or x == n - 1:
+            return True
+        while d != n - 1:
+            x = (x * x) % n
+            d *= 2
+
+            if x == 1:
+                return False
+            if x == n - 1:
+                return True
+
+        return False
+
+    # Perform the test multiple times for increase accuracy
+    for _ in range(k):
+        d = n - 1
+        while d % 2 == 0:
+            d //= 2
+
+        if not mil_rab_test(d, n):
+            return False
+
+    return True
+
+
+def factorize(n):
+
+    p, q = 0, 0
+    for q in range(2, n):
+        if n % q == 0 and iprime(q):
+            p = n // q
+            return (p, q)
+    return None, None
+
+
+def main(input_file):
     try:
-        file = sys.argv[1]
-        with open(file) as f:
-            for line_num in f:
-                line_num = int(line_num)
-                if line_num % 2 == 0:
-                        print("{}={}*{}".format(line_num, line_num // 2, 2))
-                        continue
-                i = 3
-                while i < line_num // 2:
-                    if line_num % i == 0:
-                        print("{}={}*{}".format(line_num, line_num // i, i))
-                        break
-                    i = i + 2
-                if i == (line_num // 2) + 1:
-                    print("{}={}*{}".format(line_num, line_num, 1))
-    except (IndexError):
-        pass
+        with open(input_file, 'r') as file:
+            # for line in file:
+            num = int(file.read().strip())
+            p, q = factorize(num)
+            if p is not None and q is not None:
+                print(f"{num}={p}*{q}")
+            else:
+                print(f"No two prime factors found for {num}.")
+    except FileNotFoundError:
+        print(f"File '{input_file}' not found.")
 
 
-factorize()
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: rsa <file>")
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+    main(input_file)
