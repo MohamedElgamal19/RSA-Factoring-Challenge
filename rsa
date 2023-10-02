@@ -1,78 +1,34 @@
 #!/usr/bin/python3
-
-"""
-
-Factorizing numbers into a file with a product of 2 prime numbers
-
-"""
-import sys
-import random
+from sys import argv
 
 
-def iprime(n, k=5):
-    if n <= 1:
-        return False
-    if n <= 2:
-        return True
-
-    # Miller-Rabin primality test
-    def mil_rab_test(d, n):
-        a = random.randint(2, n - 2)
-        x = pow(a, d, n)
-
-        if x == 1 or x == n - 1:
-            return True
-        while d != n - 1:
-            x = (x * x) % n
-            d *= 2
-
-            if x == 1:
-                return False
-            if x == n - 1:
-                return True
-
-        return False
-
-    # Perform the test multiple times for increase accuracy
-    for _ in range(k):
-        d = n - 1
-        while d % 2 == 0:
-            d //= 2
-
-        if not mil_rab_test(d, n):
-            return False
-
-    return True
+def isprime(num):
+    if num % 2 == 0:
+        return 0
+    half = num//2 + 1
+    for i in range(3, half, 2):
+        if num % i == 0:
+            return 0
+    return 1
 
 
-def factorize(n):
-
-    p, q = 0, 0
-    for q in range(2, n):
-        if n % q == 0 and iprime(q):
-            p = n // q
-            return (p, q)
-    return None, None
-
-
-def main(input_file):
-    try:
-        with open(input_file, 'r') as file:
-            # for line in file:
-            num = int(file.read().strip())
-            p, q = factorize(num)
-            if p is not None and q is not None:
-                print(f"{num}={p}*{q}")
-            else:
-                print(f"No two prime factors found for {num}.")
-    except FileNotFoundError:
-        print(f"File '{input_file}' not found.")
+def factorize(num):
+    if num % 2 == 0:
+        return 2
+    half = num//2 + 1
+    for i in range(3, half, 2):
+        if num % i == 0:
+            if isprime(i) and isprime(num//i):
+                return i
+    return 1
 
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: rsa <file>")
-        sys.exit(1)
-
-    input_file = sys.argv[1]
-    main(input_file)
+if len(argv) != 2:
+    print("Usage: ./factors <file>")
+    exit(98)
+with open(argv[1]) as file:
+    line = file.readline()
+    if line != "":
+        num = int(line)
+        q = factorize(num)
+        print("{}={}*{}".format(num, num//q, q))
